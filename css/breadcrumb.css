@@ -1,0 +1,26 @@
+/* =============================================
+   MOONLY — BREADCRUMB (components/breadcrumb.css)
+   ============================================= */
+
+.breadcrumb-bar {
+    /* Reserva el espacio del navbar fixed.
+       --navbar-h se calcula en el script inline de header.php
+       justo después de renderizar el navbar, así que siempre
+       tiene el valor correcto antes de que este elemento se pinte. */
+    padding: calc(var(--navbar-h, 160px) + 16px) 0 0;
+    position: relative;
+    z-index: 1;
+}
+
+.breadcrumb-bar .container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: .85rem;
+    color: var(--muted);
+}
+
+.breadcrumb-bar a            { color: var(--muted); transition: color .15s; }
+.breadcrumb-bar a:hover      { color: var(--cyan); }
+.breadcrumb-bar .current     { color: var(--text); font-weight: 600; }
+.breadcrumb-bar i            { font-size: .65rem; opacity: .6; }

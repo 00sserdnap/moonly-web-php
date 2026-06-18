@@ -1,7 +1,8 @@
 <?php
-$base_path = '';
+$base_path  = '';
 $page_title = 'Moonly Hosting — Minecraft & Cloud Premium';
-// Llamamos al encabezado
+$is_home    = true;
+$extra_js   = 'js/index.js';
 include 'includes/header.php';
 ?>
 
