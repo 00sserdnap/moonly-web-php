@@ -1,0 +1,154 @@
+/* =============================================
+   MOONLY — PLANES MINECRAFT (planes.css)
+   ============================================= */
+
+body.planes-body {
+    background-image:
+        linear-gradient(var(--bg-page-overlay), var(--bg-page-overlay)),
+        url('../images/home/fondo.png');
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* ── BREADCRUMB ── */
+.breadcrumb-bar {
+    /* --navbar-h se calcula en JS (main.js) según la altura real del navbar.
+       El valor por defecto es un fallback generoso mientras JS no ha corrido. */
+    padding: calc(var(--navbar-h, 190px) + 24px) 0 0;
+    position: relative; z-index: 1;
+}
+.breadcrumb-bar .container { display: flex; align-items: center; gap: 10px; font-size: .85rem; color: var(--muted); }
+.breadcrumb-bar a { color: var(--muted); transition: color .15s; }
+.breadcrumb-bar a:hover { color: var(--cyan); }
+.breadcrumb-bar .current { color: var(--text); font-weight: 600; }
+.breadcrumb-bar i { font-size: .65rem; opacity: .6; }
+
+/* ── PLAN HERO ── */
+.plan-hero { padding: 36px 0 70px; position: relative; z-index: 1; }
+.plan-hero .container { display: flex; gap: 48px; align-items: flex-start; }
+
+.plan-hero-media { flex: 0 0 240px; }
+.plan-hero-cover {
+    width: 240px; height: 340px; border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border-soft); box-shadow: 0 24px 48px var(--shadow-color);
+    background: var(--bg-card);
+}
+.plan-hero-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.plan-hero-link {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-top: 14px; font-size: .85rem; font-weight: 600; color: var(--muted);
+    transition: color .2s;
+}
+.plan-hero-link:hover { color: var(--cyan); }
+
+.plan-hero-content { flex: 1; min-width: 0; }
+.plan-hero-title { font-size: clamp(2.2rem, 4.2vw, 3.4rem); font-weight: 800; line-height: 1.1; margin-bottom: 22px; letter-spacing: -.5px; }
+
+.plan-hero-badges { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
+.plan-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--hover-bg); border: 1px solid var(--btn-border);
+    padding: 8px 16px; border-radius: 30px; font-size: .82rem; font-weight: 600; color: var(--text);
+}
+.plan-badge i { color: var(--cyan); }
+
+.plan-hero-desc { color: var(--muted); font-size: 1.02rem; line-height: 1.7; max-width: 640px; margin-bottom: 30px; }
+
+.plan-hero-buttons { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+.plan-hero-buttons .trial-note { font-size: .78rem; color: var(--muted); width: 100%; margin-top: -4px; }
+
+@media (max-width: 750px) {
+    .plan-hero .container { flex-direction: column; align-items: center; text-align: center; }
+    .plan-hero-buttons { justify-content: center; }
+    .plan-hero-desc { margin-left: auto; margin-right: auto; }
+}
+
+/* ── DURATION SWITCH ── */
+.duration-section { padding: 70px 20px 0; text-align: center; position: relative; z-index: 1; }
+
+.duration-switch {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--bg-elevated); border: 1px solid var(--border-soft);
+    border-radius: 14px; padding: 6px; margin: 0 auto 8px;
+}
+.duration-option {
+    position: relative;
+    padding: 11px 26px; border-radius: 10px; cursor: pointer;
+    font-size: .92rem; font-weight: 700; color: var(--muted);
+    transition: color .2s;
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.duration-option .duration-badge {
+    font-size: .62rem; font-weight: 700; letter-spacing: .4px; text-transform: uppercase;
+    color: var(--yellow); opacity: .85;
+}
+.duration-option.active { color: var(--text); }
+.duration-option.active::before {
+    content: ''; position: absolute; inset: 0; border-radius: 10px;
+    background: rgba(122,221,255,.12); border: 1px solid var(--border);
+    z-index: -1;
+}
+
+/* ── PLANS GRID ── */
+.plans-section { padding: 40px 20px 100px; position: relative; z-index: 1; }
+.plans-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+    max-width: 1160px; margin: 0 auto;
+}
+.plan-card {
+    background: var(--bg-elevated); border: 1px solid var(--border-soft);
+    border-radius: 16px; padding: 26px 22px; position: relative;
+    display: flex; flex-direction: column;
+    transition: transform .25s, border-color .25s, box-shadow .25s;
+}
+.plan-card:hover { transform: translateY(-4px); border-color: var(--border); box-shadow: 0 16px 36px var(--shadow-color); }
+.plan-card.popular { border-color: var(--cyan); box-shadow: 0 0 0 1px var(--cyan), 0 16px 36px rgba(122,221,255,.12); }
+
+.plan-popular-tag {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--cyan); color: #04101a; font-size: .68rem; font-weight: 800;
+    letter-spacing: .4px; text-transform: uppercase; padding: 5px 14px; border-radius: 20px;
+    box-shadow: 0 6px 16px var(--cyan-glow); white-space: nowrap;
+}
+
+.plan-name { font-size: .78rem; font-weight: 700; color: var(--cyan); letter-spacing: .4px; margin-bottom: 6px; }
+.plan-ram { font-size: 1.6rem; font-weight: 800; color: var(--text); margin-bottom: 2px; }
+.plan-ram-label { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 18px; }
+
+.plan-price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+.plan-price { font-size: 2.1rem; font-weight: 800; color: var(--cyan); letter-spacing: -.5px; }
+.plan-price-period { font-size: .82rem; color: var(--muted); font-weight: 500; }
+.plan-discount-badge {
+    font-size: .68rem; font-weight: 800; color: #04101a; background: var(--yellow);
+    padding: 2px 8px; border-radius: 6px; letter-spacing: .3px;
+}
+.plan-total-row { display: flex; flex-direction: column; gap: 2px; font-size: .76rem; color: var(--muted); margin-bottom: 20px; }
+.plan-price-original { text-decoration: line-through; color: var(--muted); opacity: .7; font-size: .82rem; }
+
+.plan-specs { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; flex: 1; }
+.plan-spec { display: flex; align-items: center; gap: 10px; font-size: .85rem; color: var(--text-soft); }
+.plan-spec i { color: var(--cyan); width: 16px; text-align: center; font-size: .82rem; flex-shrink: 0; }
+
+.plan-btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; padding: 12px; border-radius: 10px;
+    background: rgba(122,221,255,.1); border: 1px solid rgba(122,221,255,.25);
+    color: var(--text); font-weight: 700; font-size: .92rem;
+    transition: background .2s, border-color .2s, box-shadow .2s;
+}
+.plan-btn:hover { background: rgba(122,221,255,.18); border-color: var(--cyan); box-shadow: 0 0 18px var(--cyan-glow); }
+.plan-card.popular .plan-btn {
+    background: var(--cyan); border-color: var(--cyan); color: #04101a;
+}
+.plan-card.popular .plan-btn:hover { box-shadow: 0 0 22px var(--cyan-glow); filter: brightness(1.05); }
+
+/* ── RESPONSIVE GRID ── */
+@media (max-width: 1100px) { .plans-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 820px)  { .plans-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px)  {
+    .plans-grid { grid-template-columns: 1fr; max-width: 380px; }
+    .duration-switch { flex-direction: column; width: 100%; max-width: 320px; }
+    .duration-option { width: 100%; }
+}

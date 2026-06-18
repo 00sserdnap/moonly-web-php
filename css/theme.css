@@ -1,0 +1,191 @@
+/* =============================================
+   MOONLY HOSTING — THEME SYSTEM (Dark / Light)
+   Cargar ANTES de global.css e index.css
+   ============================================= */
+
+/* ── DARK (default) ── */
+:root,
+html[data-theme="dark"] {
+    --bg-dark:     #080b12;
+    --bg-card:     #0e1420;
+    --bg-elevated: rgba(14,20,32,.9);
+    --bg-section:  rgba(8,11,18,.75);
+    --bg-nav:      rgba(8,11,18,.92);
+    --bg-dropdown: rgba(10,14,22,.98);
+    --bg-tooltip:  rgba(8,12,22,.97);
+    --border:      rgba(122,221,255,0.12);
+    --border-soft: rgba(255,255,255,.05);
+    --border-faint:rgba(255,255,255,.04);
+    --text:        #ffffff;
+    --text-soft:   rgba(255,255,255,.8);
+    --muted:       #8892a4;
+    --cyan:        #7addff;
+    --cyan-glow:   rgba(122,221,255,0.35);
+    --yellow:      #facc15;
+    --green:       #00e676;
+    --btn-border:  rgba(255,255,255,0.12);
+    --hover-bg:    rgba(255,255,255,.05);
+    --hover-bg-soft: rgba(255,255,255,.02);
+    --card-overlay-grad: linear-gradient(180deg, rgba(8,11,18,.15) 0%, rgba(8,11,18,.75) 100%);
+    --shadow-color: rgba(0,0,0,.7);
+    --bg-page-overlay: rgba(8,11,18,.93);
+    --radius:      12px;
+    --theme-icon-opacity: 1;
+}
+
+/* ── LIGHT ── */
+html[data-theme="light"] {
+    --bg-dark:     #f4f7fb;
+    --bg-card:     #ffffff;
+    --bg-elevated: rgba(255,255,255,.92);
+    --bg-section:  rgba(244,247,251,.85);
+    --bg-nav:      rgba(255,255,255,.92);
+    --bg-dropdown: rgba(255,255,255,.98);
+    --bg-tooltip:  rgba(255,255,255,.98);
+    --border:      rgba(20,110,150,0.16);
+    --border-soft: rgba(10,20,40,.08);
+    --border-faint:rgba(10,20,40,.06);
+    --text:        #0e1420;
+    --text-soft:   rgba(14,20,32,.82);
+    --muted:       #5b6678;
+    --cyan:        #0089c2;
+    --cyan-glow:   rgba(0,137,194,0.25);
+    --yellow:      #b8860b;
+    --green:       #0a9d52;
+    --btn-border:  rgba(14,20,32,0.16);
+    --hover-bg:    rgba(10,20,40,.05);
+    --hover-bg-soft: rgba(10,20,40,.025);
+    --card-overlay-grad: linear-gradient(180deg, rgba(244,247,251,.1) 0%, rgba(244,247,251,.82) 100%);
+    --shadow-color: rgba(20,30,50,.18);
+    --bg-page-overlay: rgba(244,247,251,.93);
+    --radius:      12px;
+    --theme-icon-opacity: .85;
+}
+
+/* Transición suave al cambiar de tema */
+html.theme-transition,
+html.theme-transition * {
+    transition: background-color .25s ease, color .25s ease,
+                border-color .25s ease, box-shadow .25s ease,
+                fill .25s ease, stroke .25s ease !important;
+}
+
+/* ── THEME TOGGLE BUTTON ── */
+.theme-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--hover-bg); border: 1px solid var(--btn-border);
+    color: var(--text); cursor: pointer; flex-shrink: 0;
+    transition: background .18s, border-color .18s, transform .18s;
+    font-size: .78rem; position: relative; overflow: hidden;
+}
+.theme-toggle:hover { background: var(--hover-bg); border-color: var(--cyan); transform: translateY(-1px); }
+.theme-toggle i { position: absolute; transition: opacity .25s ease, transform .35s ease; }
+.theme-toggle .fa-sun  { opacity: 0; transform: rotate(60deg) scale(.4); color: var(--yellow); }
+.theme-toggle .fa-moon { opacity: 1; transform: rotate(0) scale(1); color: var(--cyan); }
+html[data-theme="light"] .theme-toggle .fa-sun  { opacity: 1; transform: rotate(0) scale(1); }
+html[data-theme="light"] .theme-toggle .fa-moon { opacity: 0; transform: rotate(-60deg) scale(.4); }
+
+/* ── LANGUAGE SELECTOR ── */
+.lang-selector { position: relative; }
+.lang-toggle {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--hover-bg); border: 1px solid var(--btn-border);
+    color: var(--text); padding: 0 8px; height: 28px; border-radius: 14px;
+    font-size: .8rem; font-weight: 600; cursor: pointer;
+    transition: background .18s, border-color .18s;
+}
+.lang-toggle:hover { background: var(--hover-bg); border-color: var(--cyan); }
+.lang-toggle .flag { font-size: .95rem; line-height: 1; }
+.lang-toggle .current-code { display: none; }
+.lang-toggle .fa-chevron-down { font-size: .5rem; opacity: .7; transition: transform .2s; }
+.lang-selector.open .lang-toggle .fa-chevron-down { transform: rotate(180deg); }
+
+.lang-menu {
+    position: absolute; top: calc(100% + 8px); right: 0;
+    background: var(--bg-dropdown); backdrop-filter: blur(16px);
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 6px; min-width: 168px;
+    opacity: 0; visibility: hidden; transform: translateY(6px);
+    transition: opacity .18s, transform .18s, visibility .18s;
+    box-shadow: 0 20px 40px var(--shadow-color);
+    z-index: 300;
+}
+.lang-selector.open .lang-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.lang-option {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px; border-radius: 7px; cursor: pointer;
+    font-size: .85rem; color: var(--muted);
+    transition: background .15s, color .15s;
+}
+.lang-option:hover { background: var(--hover-bg); color: var(--text); }
+.lang-option.active { color: var(--text); background: rgba(122,221,255,.08); }
+.lang-option .flag { font-size: 1.05rem; }
+.lang-option .check { margin-left: auto; color: var(--cyan); font-size: .75rem; opacity: 0; }
+.lang-option.active .check { opacity: 1; }
+
+/* ── CURRENCY SELECTOR (mismo patrón visual que lang-selector) ── */
+.currency-selector-ctrl { position: relative; }
+.currency-toggle {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--hover-bg); border: 1px solid var(--btn-border);
+    color: var(--text); padding: 0 9px; height: 28px; border-radius: 14px;
+    font-size: .72rem; font-weight: 700; letter-spacing: .3px; cursor: pointer;
+    transition: background .18s, border-color .18s;
+}
+.currency-toggle:hover { background: var(--hover-bg); border-color: var(--cyan); }
+.currency-toggle .fa-chevron-down { font-size: .5rem; opacity: .7; transition: transform .2s; }
+.currency-selector-ctrl.open .currency-toggle .fa-chevron-down { transform: rotate(180deg); }
+
+.currency-menu {
+    position: absolute; top: calc(100% + 8px); right: 0;
+    background: var(--bg-dropdown); backdrop-filter: blur(16px);
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 8px; min-width: 240px; max-width: 280px;
+    opacity: 0; visibility: hidden; transform: translateY(6px);
+    transition: opacity .18s, transform .18s, visibility .18s;
+    box-shadow: 0 20px 40px var(--shadow-color);
+    z-index: 300;
+}
+.currency-selector-ctrl.open .currency-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+
+.currency-search-wrap {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 10px; margin-bottom: 6px;
+    background: var(--hover-bg); border: 1px solid var(--border-soft); border-radius: 8px;
+}
+.currency-search-wrap i { color: var(--muted); font-size: .78rem; flex-shrink: 0; }
+.currency-search {
+    background: none; border: none; outline: none; color: var(--text);
+    font-size: .82rem; font-family: inherit; width: 100%;
+}
+.currency-search::placeholder { color: var(--muted); }
+
+.currency-list {
+    display: flex; flex-direction: column; gap: 1px;
+    max-height: 280px; overflow-y: auto;
+}
+.currency-empty {
+    padding: 16px 12px; text-align: center; color: var(--muted); font-size: .82rem;
+}
+
+.currency-option {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px; border-radius: 7px; cursor: pointer;
+    font-size: .85rem; color: var(--muted);
+    transition: background .15s, color .15s;
+}
+.currency-option:hover { background: var(--hover-bg); color: var(--text); }
+.currency-option.active { color: var(--text); background: rgba(122,221,255,.08); }
+.currency-option .code { font-weight: 700; width: 34px; flex-shrink: 0; color: var(--text); font-size: .82rem; }
+.currency-option .name { color: var(--text-soft); font-size: .8rem; display: flex; flex-direction: column; line-height: 1.3; }
+.currency-option .currency-country { color: var(--muted); font-size: .68rem; font-weight: 400; }
+.currency-option .check { margin-left: auto; color: var(--cyan); font-size: .75rem; opacity: 0; flex-shrink: 0; }
+.currency-option.active .check { opacity: 1; }
+
+/* ── Wrapper for the two controls in navbar ── */
+.utility-controls { display: flex; align-items: center; gap: 8px; }
+
+@media (max-width: 980px) {
+    .utility-controls { order: -1; }
+}
