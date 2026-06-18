@@ -71,12 +71,16 @@
 <!-- ════════════════════════════════════════
      SCRIPTS — orden importa:
      1. Diccionario de traducciones
-     2. Motor de tema + i18n + moneda
-     3. JS específico de la página (opcional)
-     4. main.js (navbar, menús, transiciones)
+     2. Motor de tema (dark/light)
+     3. Motor i18n (traducciones)
+     4. Motor de monedas (conversión + GeoIP)
+     5. JS específico de la página (opcional)
+     6. main.js (navbar, menús, transiciones)
      ════════════════════════════════════════ -->
 <script src="<?php echo $base_path; ?>js/i18n-dict.js?v=11"></script>
-<script src="<?php echo $base_path; ?>js/theme-i18n.js?v=11"></script>
+<script src="<?php echo $base_path; ?>js/theme.js?v=11"></script>
+<script src="<?php echo $base_path; ?>js/i18n.js?v=11"></script>
+<script src="<?php echo $base_path; ?>js/currency.js?v=11"></script>
 
 <?php if (isset($extra_js) && $extra_js): ?>
     <script src="<?php echo $base_path; ?><?php echo $extra_js; ?>?v=11"></script>
