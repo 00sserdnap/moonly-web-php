@@ -8,13 +8,12 @@
 
     var STORAGE_THEME = "moonly_theme";
     var STORAGE_LANG   = "moonly_lang";
-    var SUPPORTED_LANGS = ["es", "en", "pt"];
+    var SUPPORTED_LANGS = ["es", "en"];
     var DEFAULT_LANG = "es";
 
     var LANG_META = {
         es: { flag: "🇪🇸", label: "Español" },
-        en: { flag: "🇺🇸", label: "English" },
-        pt: { flag: "🇧🇷", label: "Português" }
+        en: { flag: "🇺🇸", label: "English" }
     };
 
     /* ────────────────────────────────
@@ -59,7 +58,6 @@
     ──────────────────────────────── */
     function detectBrowserLang() {
         var nav = (navigator.language || navigator.userLanguage || "es").toLowerCase();
-        if (nav.indexOf("pt") === 0) return "pt";
         if (nav.indexOf("en") === 0) return "en";
         if (nav.indexOf("es") === 0) return "es";
         return DEFAULT_LANG;
@@ -94,8 +92,6 @@
             if (val !== undefined) el.textContent = val;
         });
 
-        /* data-i18n-html: igual que data-i18n pero usa innerHTML
-           para claves cuyo valor contiene <strong>, <a href>, etc. */
         document.querySelectorAll("[data-i18n-html]").forEach(function (el) {
             var key = el.getAttribute("data-i18n-html");
             var val = t(key, lang);
@@ -174,15 +170,7 @@
 
     /* ────────────────────────────────
        CURRENCY
-       Tasas fijas respecto a USD (actualizar manualmente).
-       Fuente: tasas de mercado aprox., referencia tomada en 2026.
-       country: nombre del país principal asociado, usado en el buscador.
-       popular: true → se muestra en la lista corta antes de buscar.
     ──────────────────────────────── */
-    /* La moneda elegida a mano vive en sessionStorage a propósito: dura
-       mientras la pestaña está abierta (para poder comparar precios sin que
-       se reviertan en cada clic), pero se olvida al recargar o volver a
-       entrar — momento en que SIEMPRE se vuelve a detectar el país real. */
     var STORAGE_CURRENCY = "moonly_currency";
     var DEFAULT_CURRENCY = "USD";
 
@@ -222,28 +210,19 @@
     var SUPPORTED_CURRENCIES = Object.keys(CURRENCY_META);
     var POPULAR_CURRENCIES = SUPPORTED_CURRENCIES.filter(function (c) { return CURRENCY_META[c].popular; });
 
-    /* Mapa de país (ISO 3166-1 alpha-2, lo que devuelve la API de GeoIP) a moneda. */
     var COUNTRY_TO_CURRENCY = {
-        // Norteamérica
         US: "USD", PR: "USD", CA: "CAD", MX: "MXN",
-        // LATAM
         CL: "CLP", AR: "ARS", CO: "COP", PE: "PEN", BR: "BRL",
         UY: "UYU", BO: "BOB", PY: "PYG", GT: "GTQ", HN: "HNL",
         NI: "NIO", CR: "CRC", DO: "DOP", PA: "PAB", VE: "VES",
         EC: "USD", SV: "USD",
-        // Europa (eurozona)
         ES: "EUR", DE: "EUR", FR: "EUR", IT: "EUR", PT: "EUR",
         NL: "EUR", BE: "EUR", AT: "EUR", IE: "EUR", FI: "EUR",
         GR: "EUR", LU: "EUR", SI: "EUR", SK: "EUR", LT: "EUR",
         LV: "EUR", EE: "EUR", CY: "EUR", MT: "EUR", HR: "EUR",
-        // Europa (otras monedas)
         GB: "GBP", CH: "CHF", SE: "SEK", NO: "NOK", DK: "DKK", PL: "PLN"
     };
 
-    /* Mapa de zona horaria (IANA, ej. "America/Santiago") a moneda.
-       Funciona como pista incluso cuando el idioma del navegador es
-       genérico ("es" sin región, "es-419", etc.) porque la zona horaria del
-       sistema operativo casi siempre delata el país real del usuario. */
     var TIMEZONE_TO_CURRENCY = {
         "America/Santiago": "CLP",
         "America/Buenos_Aires": "ARS", "America/Argentina/Buenos_Aires": "ARS", "America/Cordoba": "ARS",
@@ -276,18 +255,11 @@
         "Europe/Warsaw": "PLN"
     };
 
-    /* Detección sin red, usada como primer pintado instantáneo y como
-       respaldo si la consulta GeoIP (más abajo) no responde a tiempo o falla.
-       Combina dos pistas del propio navegador, sin pedir permisos:
-       1) la zona horaria del sistema (más confiable: no depende de cómo
-          esté configurado el idioma, casi siempre delata el país real)
-       2) la región del idioma del navegador (ej. "es-CL" → CL) como
-          respaldo si la zona horaria no está en el mapa. */
     function detectCurrencyFromLocale() {
         try {
             var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
             if (tz && TIMEZONE_TO_CURRENCY[tz]) return TIMEZONE_TO_CURRENCY[tz];
-        } catch (e) { /* Intl no disponible: seguir con el siguiente método */ }
+        } catch (e) {}
 
         var locales = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""]);
         for (var i = 0; i < locales.length; i++) {
@@ -296,16 +268,9 @@
             if (region && COUNTRY_TO_CURRENCY[region]) return COUNTRY_TO_CURRENCY[region];
         }
 
-        var lang = (navigator.language || "es").toLowerCase();
-        if (lang.indexOf("pt") === 0) return "BRL";
         return "USD";
     }
 
-    /* GeoIP real vía ipapi.co (gratis, sin API key, CORS habilitado).
-       El país detectado se cachea en sessionStorage: se vuelve a consultar
-       en cada sesión nueva (pestaña/recarga), igual que la moneda misma,
-       para que el origen del usuario siempre se re-confirme al volver a
-       entrar — nunca se queda "pegado" a una IP vieja de hace semanas. */
     var GEOIP_CACHE_KEY = "moonly_geoip_country";
 
     function detectCurrencyViaGeoIP(callback) {
@@ -335,15 +300,8 @@
             });
     }
 
-    /* Refleja la moneda realmente activa en pantalla en todo momento (incluida
-       la que llega tarde desde GeoIP). getPreferredCurrency() la consulta
-       primero para que cualquier script que pregunte "qué moneda hay ahora"
-       reciba siempre el valor más reciente, no uno recalculado desde cero. */
     var lastAppliedCurrency = null;
 
-    /* Sin memoria entre sesiones a propósito: cada carga de página vuelve a
-       detectar el país real, salvo que el usuario ya haya elegido otra
-       moneda a mano DURANTE esta misma sesión (ver applyCurrency). */
     function getPreferredCurrency() {
         if (lastAppliedCurrency) return lastAppliedCurrency;
         var sessionChoice = sessionStorage.getItem(STORAGE_CURRENCY);
@@ -384,9 +342,6 @@
 
         lastAppliedCurrency = code;
 
-        // Solo una elección manual del usuario se guarda (y solo por esta sesión/pestaña).
-        // La detección automática (locale, timezone, GeoIP) nunca escribe aquí,
-        // así que la próxima carga de página siempre vuelve a detectar el país real.
         if (isManualChoice) sessionStorage.setItem(STORAGE_CURRENCY, code);
 
         document.querySelectorAll(".currency-toggle .current-currency").forEach(function (el) {
@@ -449,8 +404,8 @@
                     matches = SUPPORTED_CURRENCIES.filter(function (code) {
                         var meta = CURRENCY_META[code];
                         return code.toLowerCase().indexOf(q) !== -1 ||
-                               meta.name.toLowerCase().indexOf(q) !== -1 ||
-                               meta.country.toLowerCase().indexOf(q) !== -1;
+                            meta.name.toLowerCase().indexOf(q) !== -1 ||
+                            meta.country.toLowerCase().indexOf(q) !== -1;
                     });
                 }
 
@@ -463,35 +418,25 @@
                 });
             });
 
-            // Evitar que escribir en el buscador cierre el menú o dispare otros handlers
             searchInput.addEventListener("click", function (e) { e.stopPropagation(); });
             searchInput.addEventListener("keydown", function (e) { e.stopPropagation(); });
         });
     }
 
     function initCurrency() {
-        // Limpieza de residuos de una versión anterior de este sistema, que
-        // guardaba la moneda en localStorage (permanente) en vez de
-        // sessionStorage. Sin esto, un valor viejo quedaría ahí para siempre
-        // sin afectar nada (ya no se lee), pero mejor no dejar basura.
         try {
             localStorage.removeItem(STORAGE_CURRENCY);
             localStorage.removeItem(STORAGE_CURRENCY + "_manual_override");
             localStorage.removeItem(GEOIP_CACHE_KEY);
-        } catch (e) { /* localStorage no disponible: no es crítico, seguir */ }
+        } catch (e) {}
 
         buildCurrencyMenuIfNeeded();
 
         var hasManualChoiceThisSession = !!sessionStorage.getItem(STORAGE_CURRENCY);
         applyCurrency(getPreferredCurrency(), false, false);
 
-        // Si en ESTA sesión el usuario no eligió moneda a mano, refinamos con
-        // GeoIP real en segundo plano (no bloquea el primer render, que ya
-        // usó timezone/locale de forma instantánea y sin red).
         if (!hasManualChoiceThisSession) {
             detectCurrencyViaGeoIP(function (geoCurrency) {
-                // Re-chequear por si el usuario eligió manualmente mientras la
-                // consulta GeoIP estaba en curso (la red puede tardar un poco).
                 if (geoCurrency && !sessionStorage.getItem(STORAGE_CURRENCY)) {
                     applyCurrency(geoCurrency, true, false);
                 }
@@ -531,7 +476,6 @@
         initCurrency();
     });
 
-    /* Exponer utilidades por si otro script las necesita (ej. textos generados dinámicamente) */
     window.MoonlyI18n = { t: t, getLang: getPreferredLang, applyLang: applyLang };
     window.MoonlyTheme = { applyTheme: applyTheme, getTheme: getPreferredTheme };
     window.MoonlyCurrency = {
