@@ -224,33 +224,6 @@ require_once dirname(__FILE__) . '/config.php';
                         </div>
                     </li>
 
-                    <li class="dropdown-container has-mega">
-                        <a href="#" class="dropdown-toggle">
-                            <span data-i18n="nav.bundles">Bundles</span>
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </a>
-                        <div class="mega-menu">
-                            <a href="<?php echo $base_path; ?>html/bundles-networks.php" class="mega-card bundle-networks">
-                                <span class="mega-card-label">
-                                    <span data-i18n="mega.bundle_networks.title">Network Packs</span>
-                                    <small data-i18n="mega.bundle_networks.sub">Hub · Survival · SkyBlock</small>
-                                </span>
-                            </a>
-                            <a href="<?php echo $base_path; ?>html/bundles-plugins.php" class="mega-card bundle-plugins">
-                                <span class="mega-card-label">
-                                    <span data-i18n="mega.bundle_plugins.title">Plugins Moonly</span>
-                                    <small data-i18n="mega.bundle_plugins.sub">Desarrollo propio</small>
-                                </span>
-                            </a>
-                            <a href="<?php echo $base_path; ?>html/bundles-configs.php" class="mega-card bundle-configs">
-                                <span class="mega-card-label">
-                                    <span data-i18n="mega.bundle_configs.title">Configs Optimizadas</span>
-                                    <small data-i18n="mega.bundle_configs.sub">server.properties · Paper · Spigot</small>
-                                </span>
-                            </a>
-                        </div>
-                    </li>
-
                     <li class="dropdown-container">
                         <a href="<?php echo $base_path; ?>html/dedicados.php" class="dropdown-toggle"
                            data-i18n="nav.dedicated">Cloud Dedicated</a>
@@ -268,10 +241,10 @@ require_once dirname(__FILE__) . '/config.php';
                                     <small data-i18n="mega.discordbot.sub">Node.js · Python · Java</small>
                                 </span>
                             </a>
-                            <a href="<?php echo $base_path; ?>html/vps.php" class="mega-card vps">
+                            <a href="<?php echo $base_path; ?>html/teamspeak.php" class="mega-card teamspeak">
                                 <span class="mega-card-label">
-                                    <span data-i18n="mega.vps.title">Budget VPS</span>
-                                    <small data-i18n="mega.vps.sub">Desde precios económicos</small>
+                                    <span data-i18n="mega.teamspeak.title">TeamSpeak</span>
+                                    <small data-i18n="mega.teamspeak.sub">Voz estable y de baja latencia</small>
                                 </span>
                             </a>
                             <a href="<?php echo $base_path; ?>html/python.php" class="mega-card python">

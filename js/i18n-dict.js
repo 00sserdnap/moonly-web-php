@@ -10,7 +10,6 @@ window.MOONLY_I18N = {
         "nav.client": "Client Area",
         "nav.dedicated": "Cloud Dedicated",
         "nav.minecraft": "Minecraft",
-        "nav.bundles": "Bundles",
         "nav.support": "Soporte",
         "nav.support_assistance": "Asistencia",
         "nav.support_information": "Información",
@@ -40,19 +39,13 @@ window.MOONLY_I18N = {
 
         "mega.discordbot.title": "Discord Bot",
         "mega.discordbot.sub": "Node.js · Python · Java",
-        "mega.vps.title": "Budget VPS",
-        "mega.vps.sub": "Desde precios económicos",
+        "mega.teamspeak.title": "TeamSpeak",
+        "mega.teamspeak.sub": "Voz estable y de baja latencia",
         "mega.python.title": "Python",
         "mega.python.sub": "Apps · Bots · Scripts",
         "mega.nodejs.title": "Node.js",
         "mega.nodejs.sub": "APIs · Apps en tiempo real",
 
-        "mega.bundle_networks.title": "Network Packs",
-        "mega.bundle_networks.sub": "Hub · Survival · SkyBlock",
-        "mega.bundle_plugins.title": "Plugins Moonly",
-        "mega.bundle_plugins.sub": "Desarrollo propio",
-        "mega.bundle_configs.title": "Configs Optimizadas",
-        "mega.bundle_configs.sub": "server.properties · Paper · Spigot",
 
         "hero.title.pre": "Ilumina el futuro de tu",
         "hero.title.highlight": "Mundo",
@@ -413,17 +406,49 @@ window.MOONLY_I18N = {
         "terms.s9_1": "Nos comprometemos a utilizar los datos de nuestros usuarios exclusivamente para brindarles el mejor servicio posible. En ningún caso venderemos ni distribuiremos los datos de nuestros clientes.",
         "terms.s9_2": "Moonly Hosting nunca guardará ningún tipo de archivo relacionado con los servicios de nuestros usuarios una vez finalice el periodo de vida del servicio, a no ser que lo hayamos especificado previamente.",
         "terms.s9_3": "Solo accederemos a los archivos/datos de los servidores de nuestros clientes cuando sea necesario brindarles soporte técnico, previo consentimiento, o cuando se sospeche que el servidor estaría infringiendo nuestros términos y condiciones.",
-        "terms.s9_4": "Tienes el derecho de solicitar la eliminación de tus datos personales. Ciertos datos no pueden ser eliminados por razones de cumplimiento normativo. Para solicitar la eliminación, crea un ticket en nuestro Discord o escríbenos a <a href=\"mailto:soporte@moonly.es\">soporte@moonly.es</a>."
+        "terms.s9_4": "Tienes el derecho de solicitar la eliminación de tus datos personales. Ciertos datos no pueden ser eliminados por razones de cumplimiento normativo. Para solicitar la eliminación, crea un ticket en nuestro Discord o escríbenos a <a href=\"mailto:soporte@moonly.es\">soporte@moonly.es</a>.",
+
+        "teamspeak.breadcrumb_current": "Hosting TeamSpeak",
+        "teamspeak.hero_title": "Hosting para Servidores TeamSpeak",
+        "teamspeak.hero_desc": "Comunicación de voz estable y de baja latencia para tu comunidad. Slots ilimitados de canales, administración total y activación inmediata.",
+        "teamspeak.feat_slots": "Slots",
+        "teamspeak.feat_lowlatency": "Baja latencia garantizada",
+
+        "python.breadcrumb_current": "Hosting Python",
+        "python.hero_title": "Hosting para Aplicaciones Python",
+        "python.hero_desc": "Aloja bots, APIs y scripts en Python sin preocuparte por el servidor. Acceso a consola, gestor de procesos y reinicio automático incluidos.",
+        "python.feat_autorestart": "Reinicio automático",
+
+        "nodejs.breadcrumb_current": "Hosting Node.js",
+        "nodejs.hero_title": "Hosting para Aplicaciones Node.js",
+        "nodejs.hero_desc": "Despliega tus APIs, bots y apps en tiempo real con Node.js. Gestor de procesos, reinicio automático y baja latencia incluidos en todos los planes.",
+        "nodejs.feat_autorestart": "Reinicio automático",
     },
 
+
     en: {
+        "teamspeak.breadcrumb_current": "TeamSpeak Hosting",
+        "teamspeak.hero_title": "TeamSpeak Server Hosting",
+        "teamspeak.hero_desc": "Stable, low-latency voice communication for your community. Unlimited channel slots, full administration and instant activation.",
+        "teamspeak.feat_slots": "Slots",
+        "teamspeak.feat_lowlatency": "Guaranteed low latency",
+
+        "python.breadcrumb_current": "Python Hosting",
+        "python.hero_title": "Python Application Hosting",
+        "python.hero_desc": "Host bots, APIs and scripts in Python without worrying about the server. Console access, process manager and automatic restart included.",
+        "python.feat_autorestart": "Automatic restart",
+
+        "nodejs.breadcrumb_current": "Node.js Hosting",
+        "nodejs.hero_title": "Node.js Application Hosting",
+        "nodejs.hero_desc": "Deploy your APIs, bots and real-time apps with Node.js. Process manager, automatic restart and low latency included in every plan.",
+        "nodejs.feat_autorestart": "Automatic restart",
+
         "nav.about": "About",
         "nav.faq": "FAQ",
         "nav.panel": "Game Panel",
         "nav.client": "Client Area",
         "nav.dedicated": "Cloud Dedicated",
         "nav.minecraft": "Minecraft",
-        "nav.bundles": "Bundles",
         "nav.support": "Support",
         "nav.support_assistance": "Assistance",
         "nav.support_information": "Information",
@@ -453,19 +478,12 @@ window.MOONLY_I18N = {
 
         "mega.discordbot.title": "Discord Bot",
         "mega.discordbot.sub": "Node.js · Python · Java",
-        "mega.vps.title": "Budget VPS",
-        "mega.vps.sub": "Starting at low prices",
+        "mega.teamspeak.title": "TeamSpeak",
+        "mega.teamspeak.sub": "Stable, low-latency voice",
         "mega.python.title": "Python",
         "mega.python.sub": "Apps · Bots · Scripts",
         "mega.nodejs.title": "Node.js",
         "mega.nodejs.sub": "APIs · Real-time apps",
-
-        "mega.bundle_networks.title": "Network Packs",
-        "mega.bundle_networks.sub": "Hub · Survival · SkyBlock",
-        "mega.bundle_plugins.title": "Moonly Plugins",
-        "mega.bundle_plugins.sub": "In-house development",
-        "mega.bundle_configs.title": "Optimized Configs",
-        "mega.bundle_configs.sub": "server.properties · Paper · Spigot",
 
         "hero.title.pre": "Light up the future of your",
         "hero.title.highlight": "World",

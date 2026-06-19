@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
         { id: "general",   icon: "fa-circle-info",      label: "General" },
         { id: "minecraft", icon: "fa-cubes",             label: "Minecraft" },
         { id: "dedicados", icon: "fa-server",            label: "Cloud Dedicated" },
-        { id: "bundles",   icon: "fa-layer-group",       label: "Network Packs" },
         { id: "discord",   icon: "fa-brands fa-discord", label: "Discord Bot" },
         { id: "pagos",     icon: "fa-credit-card",       label: "Pagos y Facturación" },
         { id: "soporte",   icon: "fa-headset",           label: "Soporte" }
@@ -72,20 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
         { id: "ded_os", cat: "dedicados",
           q: "¿Puedo elegir el sistema operativo?",
           a: "Sí, puedes solicitar la distribución Linux de tu preferencia (Ubuntu, Debian, CentOS, etc.) o Windows Server según disponibilidad, indicándolo al momento de la activación o a través de un ticket de soporte." },
-
-        /* ── NETWORK PACKS ── */
-        { id: "np_que_es", cat: "bundles",
-          q: "¿Qué es un Network Pack?",
-          a: "Son configuraciones completas de servidor listas para usar — como un Lobby o un mundo Survival — que incluyen plugins propios de Moonly y plugins premium de terceros, entregadas con el nombre que tú elijas para tu servidor." },
-        { id: "np_licencias", cat: "bundles",
-          q: "Los plugins premium normalmente piden licencia por IP, ¿cómo lo resuelven?",
-          a: "Al correr tu configuración en nuestro hosting, esa restricción de IP no existe: te entregamos los plugins de terceros incluidos en el pack sin costo extra de licencia." },
-        { id: "np_modalidades", cat: "bundles",
-          q: "¿Cuál es la diferencia entre 'Solo Configuración' y 'Configuración + Host'?",
-          a: "<strong>Solo Configuración</strong> es un pago único: te entregamos los archivos para que los instales en tu propio servidor. <strong>Configuración + Host</strong> incluye además el hosting del servidor con la RAM que elijas, cobrado mensualmente." },
-        { id: "np_personalizacion", cat: "bundles",
-          q: "¿Puedo pedir cambios o personalización sobre un pack?",
-          a: "Sí, contáctanos por Discord antes o después de tu compra para coordinar ajustes de marca, menús o features adicionales sobre cualquier Network Pack." },
 
         /* ── DISCORD BOT ── */
         { id: "db_lenguajes", cat: "discord",

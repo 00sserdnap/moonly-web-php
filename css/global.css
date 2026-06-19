@@ -241,13 +241,9 @@ html[data-theme="light"] .mc-cube    { filter: brightness(1.08) saturate(.85); o
 .mega-card.budget  { background-image: url('/images/minecraft/budget.png');  background-size: cover; background-position: center; border-color: rgba(255,255,255,.2); }
 
 .mega-card.discordbot    { background-image: url('/images/otros-hosting/discordbot.png'); background-size: cover; background-position: center; border-color: rgba(88,101,242,.35); }
-.mega-card.vps           { background-image: url('/images/otros-hosting/vps.png');        background-size: cover; background-position: center; border-color: rgba(122,221,255,.3); }
+.mega-card.teamspeak     { background-image: url('/images/otros-hosting/teamspeak.png');  background-size: cover; background-position: center; border-color: rgba(122,221,255,.3); }
 .mega-card.python        { background-image: url('/images/otros-hosting/python.png');     background-size: cover; background-position: center; border-color: rgba(55,118,171,.35); }
 .mega-card.nodejs        { background-image: url('/images/otros-hosting/nodejs.png');     background-size: cover; background-position: center; border-color: rgba(60,135,58,.35); }
-
-.mega-card.bundle-networks { background-image: url('/images/bundles/networks.png'); background-size: cover; background-position: center; border-color: rgba(160,80,255,.3); }
-.mega-card.bundle-plugins  { background-image: url('/images/bundles/plugins.png');  background-size: cover; background-position: center; border-color: rgba(255,140,40,.3); }
-.mega-card.bundle-configs  { background-image: url('/images/bundles/configs.png');  background-size: cover; background-position: center; border-color: rgba(60,180,120,.3); }
 
 /* Overlays mega-card */
 .mega-card::before { content: ''; position: absolute; inset: 0; z-index: 1; }
@@ -256,12 +252,9 @@ html[data-theme="light"] .mc-cube    { filter: brightness(1.08) saturate(.85); o
 .mega-card.modded::before,  .mega-card.modded:hover::before  { background: linear-gradient(160deg, rgba(4,2,10,.55) 0%, rgba(160,80,255,.22) 100%); }
 .mega-card.budget::before,  .mega-card.budget:hover::before  { background: linear-gradient(160deg, rgba(5,8,20,.45) 0%, rgba(255,255,255,.08) 100%); }
 .mega-card.discordbot::before, .mega-card.discordbot:hover::before { background: linear-gradient(160deg, rgba(8,8,20,.55) 0%, rgba(88,101,242,.22) 100%); }
-.mega-card.vps::before,        .mega-card.vps:hover::before        { background: linear-gradient(160deg, rgba(5,8,20,.5) 0%, rgba(122,221,255,.18) 100%); }
+.mega-card.teamspeak::before,  .mega-card.teamspeak:hover::before  { background: linear-gradient(160deg, rgba(5,8,20,.5) 0%, rgba(122,221,255,.18) 100%); }
 .mega-card.python::before,     .mega-card.python:hover::before     { background: linear-gradient(160deg, rgba(5,10,20,.55) 0%, rgba(55,118,171,.22) 100%); }
 .mega-card.nodejs::before,     .mega-card.nodejs:hover::before     { background: linear-gradient(160deg, rgba(4,12,4,.55) 0%, rgba(60,135,58,.22) 100%); }
-.mega-card.bundle-networks::before, .mega-card.bundle-networks:hover::before { background: linear-gradient(160deg, rgba(8,4,15,.55) 0%, rgba(160,80,255,.22) 100%); }
-.mega-card.bundle-plugins::before,  .mega-card.bundle-plugins:hover::before  { background: linear-gradient(160deg, rgba(15,8,2,.55) 0%, rgba(255,140,40,.22) 100%); }
-.mega-card.bundle-configs::before,  .mega-card.bundle-configs:hover::before  { background: linear-gradient(160deg, rgba(2,12,8,.55) 0%, rgba(60,180,120,.22) 100%); }
 
 .mega-card-label {
     position: relative; z-index: 2;
@@ -276,12 +269,9 @@ html[data-theme="light"] .mc-cube    { filter: brightness(1.08) saturate(.85); o
 .mega-card.modded  .mega-card-label { color: #c084fc; }
 .mega-card.budget  .mega-card-label { color: #ffffff; }
 .mega-card.discordbot .mega-card-label { color: #8d9aff; }
-.mega-card.vps        .mega-card-label { color: var(--cyan); }
+.mega-card.teamspeak  .mega-card-label { color: var(--cyan); }
 .mega-card.python     .mega-card-label { color: #6fb2e8; }
 .mega-card.nodejs     .mega-card-label { color: #7fce6c; }
-.mega-card.bundle-networks .mega-card-label { color: #c084fc; }
-.mega-card.bundle-plugins  .mega-card-label { color: #ffa75e; }
-.mega-card.bundle-configs  .mega-card-label { color: #6fd99a; }
 
 .mega-card:hover { transform: translateY(-4px) scale(1.02); }
 .mega-card.java:hover    { border-color: #ffc83d; box-shadow: 0 12px 30px rgba(255,200,61,.25); }
@@ -289,12 +279,9 @@ html[data-theme="light"] .mc-cube    { filter: brightness(1.08) saturate(.85); o
 .mega-card.modded:hover  { border-color: #c084fc; box-shadow: 0 12px 30px rgba(160,80,255,.35); }
 .mega-card.budget:hover  { border-color: rgba(255,255,255,.6); box-shadow: 0 12px 30px rgba(255,255,255,.15); }
 .mega-card.discordbot:hover { border-color: #5865F2; box-shadow: 0 12px 30px rgba(88,101,242,.3); }
-.mega-card.vps:hover        { border-color: var(--cyan); box-shadow: 0 12px 30px var(--cyan-glow); }
+.mega-card.teamspeak:hover  { border-color: var(--cyan); box-shadow: 0 12px 30px var(--cyan-glow); }
 .mega-card.python:hover     { border-color: #3776ab; box-shadow: 0 12px 30px rgba(55,118,171,.3); }
 .mega-card.nodejs:hover     { border-color: #3c873a; box-shadow: 0 12px 30px rgba(60,135,58,.3); }
-.mega-card.bundle-networks:hover { border-color: #c084fc; box-shadow: 0 12px 30px rgba(160,80,255,.3); }
-.mega-card.bundle-plugins:hover  { border-color: #ffa75e; box-shadow: 0 12px 30px rgba(255,140,40,.3); }
-.mega-card.bundle-configs:hover  { border-color: #6fd99a; box-shadow: 0 12px 30px rgba(60,180,120,.3); }
 
 /* ── MEGA MENÚ SOPORTE ── */
 .support-mega-wrapper {
