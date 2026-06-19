@@ -30,8 +30,12 @@
     /* ── Traducir una clave ── */
     function t(key, lang) {
         var dict  = window.MOONLY_I18N || {};
-        var table = dict[lang] || dict[DEFAULT] || {};
-        return table[key] !== undefined ? table[key] : (dict[DEFAULT] && dict[DEFAULT][key]);
+        /* Orden de búsqueda: idioma activo → common → idioma por defecto */
+        var table = dict[lang] || {};
+        if (table[key] !== undefined) return table[key];
+        if (dict.common && dict.common[key] !== undefined) return dict.common[key];
+        var def = dict[DEFAULT] || {};
+        return def[key];
     }
 
     /* ── Aplicar idioma al DOM ── */

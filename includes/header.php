@@ -4,7 +4,10 @@ if (!isset($base_path))   $base_path   = '';
 if (!isset($page_title))  $page_title  = 'Moonly Hosting';
 if (!isset($extra_css))   $extra_css   = '';
 if (!isset($body_class))  $body_class  = '';
-if (!isset($is_home))     $is_home     = false;   // ← nueva bandera: solo index.php la pone en true
+if (!isset($is_home))     $is_home     = false;
+
+// Configuración centralizada (URLs, emails, versión de assets)
+require_once dirname(__FILE__) . '/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="es" data-theme="dark">
@@ -14,26 +17,21 @@ if (!isset($is_home))     $is_home     = false;   // ← nueva bandera: solo ind
     <meta name="theme-color" content="#080b12">
     <title><?php echo htmlspecialchars($page_title); ?></title>
 
-    <!-- Fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- CSS base (siempre) -->
-    <link rel="stylesheet" href="<?php echo $base_path; ?>css/theme.css?v=11">
-    <link rel="stylesheet" href="<?php echo $base_path; ?>css/global.css?v=11">
-    <link rel="stylesheet" href="<?php echo $base_path; ?>css/breadcrumb.css?v=11">
+    <link rel="stylesheet" href="<?php echo $base_path; ?>css/theme.css?v=<?php echo ASSET_VERSION; ?>">
+    <link rel="stylesheet" href="<?php echo $base_path; ?>css/global.css?v=<?php echo ASSET_VERSION; ?>">
+    <link rel="stylesheet" href="<?php echo $base_path; ?>css/breadcrumb.css?v=<?php echo ASSET_VERSION; ?>">
 
-    <!-- index.css SOLO en el home -->
     <?php if ($is_home): ?>
-        <link rel="stylesheet" href="<?php echo $base_path; ?>css/index.css?v=11">
+        <link rel="stylesheet" href="<?php echo $base_path; ?>css/index.css?v=<?php echo ASSET_VERSION; ?>">
     <?php endif; ?>
 
-    <!-- CSS específico de la página (planes.css, faq.css, etc.) -->
     <?php if ($extra_css): ?>
-        <link rel="stylesheet" href="<?php echo $base_path; ?><?php echo $extra_css; ?>?v=11">
+        <link rel="stylesheet" href="<?php echo $base_path; ?><?php echo $extra_css; ?>?v=<?php echo ASSET_VERSION; ?>">
     <?php endif; ?>
 
-    <!-- Aplicar tema guardado ANTES del primer paint (evita flash) -->
     <script>
         (function () {
             try {
@@ -47,12 +45,69 @@ if (!isset($is_home))     $is_home     = false;   // ← nueva bandera: solo ind
                 var l = localStorage.getItem('moonly_lang');
                 if (!l) {
                     var nav = (navigator.language || 'es').toLowerCase();
-                    l = (nav.indexOf('en') === 0) ? 'en' : 'es';  /* ← bug corregido: paréntesis extra eliminado */
+                    l = (nav.indexOf('en') === 0) ? 'en' : 'es';
                 }
                 document.documentElement.setAttribute('lang', l);
             } catch (e) {}
         })();
     </script>
+
+    <script type="text/javascript">
+        window.$crisp=[];
+        window.CRISP_WEBSITE_ID="16b304fe-c5b8-4659-b37f-3adafeeaa0f7";
+        (function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
+
+        // 1. Ocultar el widget nativo de Crisp al cargar la página
+        $crisp.push(["do", "chat:hide"]);
+
+        // 2. Cuando el usuario abre el chat, ocultamos el botón flotante cyan (si existe) para no tapar el teclado
+        $crisp.push(["on", "chat:opened", function() {
+            var btn = document.getElementById("moonly-chat-btn");
+            if(btn) btn.style.display = "none";
+        }]);
+
+        // 3. Cuando el usuario cierra el chat en la 'X', ocultamos Crisp y mostramos el botón flotante cyan
+        $crisp.push(["on", "chat:closed", function() {
+            $crisp.push(["do", "chat:hide"]);
+            var btn = document.getElementById("moonly-chat-btn");
+            if(btn) btn.style.display = "flex";
+        }]);
+    </script>
+
+    <style>
+        .header-chat-btn {
+            background: rgba(0, 229, 255, 0.1);
+            color: var(--cyan);
+            border: 1px solid var(--cyan);
+            border-radius: 6px;
+            padding: 5px 12px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 8px; /* Separación con la moneda */
+            transition: all 0.3s ease;
+            height: 32px; /* Alineado con los otros botones */
+        }
+        .header-chat-btn:hover {
+            background: var(--cyan);
+            color: #080b12;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 229, 255, 0.3);
+        }
+        @media (max-width: 768px) {
+            .header-chat-btn span {
+                display: none; /* Oculta el texto en móviles para que solo quede el ícono y ahorre espacio */
+            }
+            .header-chat-btn {
+                padding: 5px 8px;
+            }
+        }
+    </style>
+
 </head>
 <body class="<?php echo htmlspecialchars($body_class); ?>">
 
@@ -68,13 +123,11 @@ if (!isset($is_home))     $is_home     = false;   // ← nueva bandera: solo ind
             </div>
         </a>
 
-        <!-- Botón menú móvil -->
         <button class="mobile-menu-btn" aria-label="Abrir menú">
             <i class="fa-solid fa-bars"></i>
         </button>
 
         <div class="nav-right">
-            <!-- Fila superior: quick links + controles -->
             <div class="nav-top-row">
                 <a href="<?php echo $base_path; ?>html/about.php" class="quick-link">
                     <i class="fa-solid fa-circle-info"></i>
@@ -84,11 +137,11 @@ if (!isset($is_home))     $is_home     = false;   // ← nueva bandera: solo ind
                     <i class="fa-solid fa-circle-question"></i>
                     <span data-i18n="nav.faq">Preguntas frecuentes</span>
                 </a>
-                <a href="https://control.moonly.es" class="quick-link" target="_blank" rel="noopener">
+                <a href="<?php echo PANEL_URL; ?>" class="quick-link" target="_blank" rel="noopener">
                     <i class="fa-solid fa-terminal"></i>
                     <span data-i18n="nav.panel">Game Panel</span>
                 </a>
-                <a href="https://billing.moonly.es" class="quick-link" target="_blank" rel="noopener">
+                <a href="<?php echo BILLING_URL; ?>" class="quick-link" target="_blank" rel="noopener">
                     <i class="fa-solid fa-credit-card"></i>
                     <span data-i18n="nav.client">Client Area</span>
                 </a>
@@ -98,7 +151,6 @@ if (!isset($is_home))     $is_home     = false;   // ← nueva bandera: solo ind
                 </a>
 
                 <div class="utility-controls">
-                    <!-- Toggle tema -->
                     <button type="button" class="theme-toggle"
                             aria-label="Cambiar tema"
                             data-i18n-attr="aria-label:theme.toggle_label"
@@ -107,7 +159,6 @@ if (!isset($is_home))     $is_home     = false;   // ← nueva bandera: solo ind
                         <i class="fa-solid fa-sun"></i>
                     </button>
 
-                    <!-- Selector idioma -->
                     <div class="lang-selector">
                         <button type="button" class="lang-toggle"
                                 aria-label="Idioma"
@@ -119,7 +170,6 @@ if (!isset($is_home))     $is_home     = false;   // ← nueva bandera: solo ind
                         <div class="lang-menu" role="listbox"></div>
                     </div>
 
-                    <!-- Selector moneda -->
                     <div class="currency-selector-ctrl">
                         <button type="button" class="currency-toggle"
                                 aria-label="Moneda"
@@ -130,14 +180,17 @@ if (!isset($is_home))     $is_home     = false;   // ← nueva bandera: solo ind
                         </button>
                         <div class="currency-menu" role="listbox"></div>
                     </div>
+
+                    <button type="button" class="header-chat-btn" onclick="$crisp.push(['do', 'chat:show']); $crisp.push(['do', 'chat:open']);" aria-label="Soporte en vivo">
+                        <i class="fa-solid fa-headset"></i>
+                        <span>Soporte</span>
+                    </button>
                 </div>
             </div>
 
-            <!-- Fila inferior: navegación principal -->
             <div class="nav-bottom-row">
                 <ul class="nav-links">
 
-                    <!-- Minecraft (mega menú) -->
                     <li class="dropdown-container has-mega">
                         <a href="#" class="dropdown-toggle">
                             <span data-i18n="nav.minecraft">Minecraft</span>
@@ -171,7 +224,6 @@ if (!isset($is_home))     $is_home     = false;   // ← nueva bandera: solo ind
                         </div>
                     </li>
 
-                    <!-- Bundles (mega menú) -->
                     <li class="dropdown-container has-mega">
                         <a href="#" class="dropdown-toggle">
                             <span data-i18n="nav.bundles">Bundles</span>
@@ -199,13 +251,11 @@ if (!isset($is_home))     $is_home     = false;   // ← nueva bandera: solo ind
                         </div>
                     </li>
 
-                    <!-- Cloud Dedicated (link directo) -->
                     <li class="dropdown-container">
                         <a href="<?php echo $base_path; ?>html/dedicados.php" class="dropdown-toggle"
                            data-i18n="nav.dedicated">Cloud Dedicated</a>
                     </li>
 
-                    <!-- Otros Hosting (mega menú) -->
                     <li class="dropdown-container has-mega">
                         <a href="#" class="dropdown-toggle">
                             <span data-i18n="nav.other_hosting">Otros Hosting</span>
@@ -239,7 +289,6 @@ if (!isset($is_home))     $is_home     = false;   // ← nueva bandera: solo ind
                         </div>
                     </li>
 
-                    <!-- Soporte (mega menú 3 columnas) -->
                     <li class="dropdown-container has-mega">
                         <a href="#" class="dropdown-toggle">
                             <span data-i18n="nav.support">Soporte</span>
@@ -250,15 +299,15 @@ if (!isset($is_home))     $is_home     = false;   // ← nueva bandera: solo ind
                                 <div class="support-col">
                                     <h4 class="support-col-title" data-i18n="nav.support_assistance">Asistencia</h4>
                                     <div class="support-col-buttons">
-                                        <a href="https://discord.gg/moonly" target="_blank" rel="noopener" class="support-btn">
+                                        <a href="<?php echo DISCORD_URL; ?>" target="_blank" rel="noopener" class="support-btn">
                                             <i class="fa-brands fa-discord"></i>
                                             <span data-i18n="nav.discord">Discord</span>
                                         </a>
-                                        <a href="https://wa.me/56900000000" target="_blank" rel="noopener" class="support-btn">
+                                        <a href="<?php echo WHATSAPP_URL; ?>" target="_blank" rel="noopener" class="support-btn">
                                             <i class="fa-brands fa-whatsapp"></i>
                                             <span data-i18n="nav.whatsapp">WhatsApp</span>
                                         </a>
-                                        <a href="mailto:soporte@moonlyhosting.com" class="support-btn">
+                                        <a href="mailto:<?php echo EMAIL_SUPPORT; ?>" class="support-btn">
                                             <i class="fa-solid fa-envelope"></i>
                                             <span data-i18n="nav.email">Email</span>
                                         </a>
@@ -284,7 +333,7 @@ if (!isset($is_home))     $is_home     = false;   // ← nueva bandera: solo ind
                                 <div class="support-col">
                                     <h4 class="support-col-title" data-i18n="nav.support_resources">Recursos</h4>
                                     <div class="support-col-buttons">
-                                        <a href="https://billing.moonly.es" target="_blank" rel="noopener" class="support-btn">
+                                        <a href="<?php echo BILLING_URL; ?>" target="_blank" rel="noopener" class="support-btn">
                                             <i class="fa-solid fa-credit-card"></i>
                                             <span data-i18n="nav.client">Client Area</span>
                                         </a>
@@ -308,9 +357,6 @@ if (!isset($is_home))     $is_home     = false;   // ← nueva bandera: solo ind
     </div>
 </header>
 
-<!-- Calcula --navbar-h inmediatamente después de renderizar el navbar,
-     antes de que cualquier sección lo necesite para su padding-top.
-     Esto evita el salto visual mientras main.js no ha cargado. -->
 <script>
     (function () {
         var nav = document.querySelector('.navbar');
