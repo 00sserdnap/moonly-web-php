@@ -8,6 +8,8 @@ if (!isset($is_home))     $is_home     = false;
 
 // Configuración centralizada (URLs, emails, versión de assets)
 require_once dirname(__FILE__) . '/config.php';
+require_once dirname(__FILE__) . '/auth-check.php';
+$loggedUser = currentUser();
 ?>
 <!DOCTYPE html>
 <html lang="es" data-theme="dark">
@@ -57,16 +59,13 @@ require_once dirname(__FILE__) . '/config.php';
         window.CRISP_WEBSITE_ID="16b304fe-c5b8-4659-b37f-3adafeeaa0f7";
         (function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
 
-        // 1. Ocultar el widget nativo de Crisp al cargar la página
         $crisp.push(["do", "chat:hide"]);
 
-        // 2. Cuando el usuario abre el chat, ocultamos el botón flotante cyan (si existe) para no tapar el teclado
         $crisp.push(["on", "chat:opened", function() {
             var btn = document.getElementById("moonly-chat-btn");
             if(btn) btn.style.display = "none";
         }]);
 
-        // 3. Cuando el usuario cierra el chat en la 'X', ocultamos Crisp y mostramos el botón flotante cyan
         $crisp.push(["on", "chat:closed", function() {
             $crisp.push(["do", "chat:hide"]);
             var btn = document.getElementById("moonly-chat-btn");
@@ -88,9 +87,9 @@ require_once dirname(__FILE__) . '/config.php';
             display: flex;
             align-items: center;
             gap: 6px;
-            margin-left: 8px; /* Separación con la moneda */
+            margin-left: 8px;
             transition: all 0.3s ease;
-            height: 32px; /* Alineado con los otros botones */
+            height: 32px;
         }
         .header-chat-btn:hover {
             background: var(--cyan);
@@ -99,12 +98,35 @@ require_once dirname(__FILE__) . '/config.php';
             box-shadow: 0 4px 12px rgba(0, 229, 255, 0.3);
         }
         @media (max-width: 768px) {
-            .header-chat-btn span {
-                display: none; /* Oculta el texto en móviles para que solo quede el ícono y ahorre espacio */
-            }
-            .header-chat-btn {
-                padding: 5px 8px;
-            }
+            .header-chat-btn span { display: none; }
+            .header-chat-btn { padding: 5px 8px; }
+        }
+
+        .header-login-btn {
+            background: var(--cyan);
+            color: #04101a;
+            border: 1px solid var(--cyan);
+            border-radius: 6px;
+            padding: 5px 14px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 8px;
+            transition: all 0.3s ease;
+            height: 32px;
+            text-decoration: none;
+        }
+        .header-login-btn:hover {
+            filter: brightness(1.08);
+            box-shadow: 0 0 14px var(--cyan-glow);
+        }
+        @media (max-width: 768px) {
+            .header-login-btn span { display: none; }
+            .header-login-btn { padding: 5px 8px; }
         }
     </style>
 
@@ -180,6 +202,37 @@ require_once dirname(__FILE__) . '/config.php';
                         </button>
                         <div class="currency-menu" role="listbox"></div>
                     </div>
+
+                    <?php if ($loggedUser): ?>
+                        <div class="user-menu-selector">
+                            <button type="button" class="user-menu-toggle" aria-haspopup="listbox">
+                                <i class="fa-solid fa-circle-user" style="color: var(--cyan);"></i>
+                                <span style="font-size:.8rem; font-weight:600; max-width:90px; overflow:hidden; text-overflow:ellipsis;"><?php echo htmlspecialchars($loggedUser['username']); ?></span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                            <div class="lang-menu user-menu">
+                                <a href="<?php echo $base_path; ?>html/foro/index.php" class="lang-option">
+                                    <i class="fa-solid fa-comments" style="color:var(--cyan); width:16px;"></i>
+                                    <span>Foro</span>
+                                </a>
+                                <?php if (in_array($loggedUser['role'], ['moderator', 'admin'])): ?>
+                                <a href="<?php echo $base_path; ?>admin/index.php" class="lang-option">
+                                    <i class="fa-solid fa-gauge" style="color:var(--cyan); width:16px;"></i>
+                                    <span>Panel Admin</span>
+                                </a>
+                                <?php endif; ?>
+                                <a href="<?php echo $base_path; ?>auth/logout.php" class="lang-option">
+                                    <i class="fa-solid fa-right-from-bracket" style="color:var(--cyan); width:16px;"></i>
+                                    <span>Cerrar sesión</span>
+                                </a>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <a href="<?php echo $base_path; ?>auth/login.php" class="header-login-btn">
+                            <i class="fa-solid fa-user"></i>
+                            <span>Iniciar sesión</span>
+                        </a>
+                    <?php endif; ?>
 
                     <button type="button" class="header-chat-btn" onclick="$crisp.push(['do', 'chat:show']); $crisp.push(['do', 'chat:open']);" aria-label="Soporte en vivo">
                         <i class="fa-solid fa-headset"></i>

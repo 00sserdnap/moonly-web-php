@@ -183,6 +183,32 @@ html[data-theme="light"] .theme-toggle .fa-moon { opacity: 0; transform: rotate(
 .currency-option .check { margin-left: auto; color: var(--cyan); font-size: .75rem; opacity: 0; flex-shrink: 0; }
 .currency-option.active .check { opacity: 1; }
 
+/* ── USER MENU (logueado) — independiente de lang-selector para evitar
+      que js/i18n.js controle el mismo botón y genere conflicto ── */
+.user-menu-selector { position: relative; }
+.user-menu-toggle {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--hover-bg); border: 1px solid var(--btn-border);
+    color: var(--text); padding: 0 10px; height: 28px; border-radius: 14px;
+    font-size: .8rem; font-weight: 600; cursor: pointer;
+    transition: background .18s, border-color .18s;
+}
+.user-menu-toggle:hover { background: var(--hover-bg); border-color: var(--cyan); }
+.user-menu-toggle .fa-chevron-down { font-size: .5rem; opacity: .7; transition: transform .2s; }
+.user-menu-selector.open .user-menu-toggle .fa-chevron-down { transform: rotate(180deg); }
+
+.user-menu-selector .user-menu {
+    position: absolute; top: calc(100% + 8px); right: 0;
+    background: var(--bg-dropdown); backdrop-filter: blur(16px);
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 6px; min-width: 180px;
+    opacity: 0; visibility: hidden; transform: translateY(6px);
+    transition: opacity .18s, transform .18s, visibility .18s;
+    box-shadow: 0 20px 40px var(--shadow-color);
+    z-index: 300;
+}
+.user-menu-selector.open .user-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+
 /* ── Wrapper for the two controls in navbar ── */
 .utility-controls { display: flex; align-items: center; gap: 8px; }
 

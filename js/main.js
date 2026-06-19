@@ -11,6 +11,7 @@
      8. Scroll-hide del navbar
      9. Mega menús (abrir/cerrar con clic)
     10. Menú móvil (hamburguesa)
+    11. Menú de usuario (logueado)
    ============================================= */
 
 /* ─────────────────────────────────────────────
@@ -200,8 +201,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* ══════════════════════════════════════════
        7. SCROLL-HIDE NAVBAR
-          Empuja el navbar hacia arriba al hacer scroll,
-          lo devuelve al parar o subir.
     ══════════════════════════════════════════ */
     (function () {
         var nav = document.querySelector('.navbar');
@@ -233,7 +232,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     e.preventDefault();
                     var container = this.parentElement;
 
-                    // Cierra otros abiertos
                     document.querySelectorAll('.has-mega.open').forEach(function (other) {
                         if (other !== container) other.classList.remove('open');
                     });
@@ -243,7 +241,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        // Cerrar al hacer clic fuera
         document.addEventListener('click', function (e) {
             document.querySelectorAll('.has-mega.open').forEach(function (c) {
                 if (!c.contains(e.target)) c.classList.remove('open');
@@ -269,7 +266,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Dropdowns normales como acordeón en móvil
         document.querySelectorAll('.dropdown-container > .dropdown-toggle').forEach(function (toggle) {
             toggle.addEventListener('click', function (e) {
                 if (window.innerWidth <= 980) {
@@ -277,6 +273,28 @@ document.addEventListener('DOMContentLoaded', function () {
                     this.parentElement.classList.toggle('open');
                 }
             });
+        });
+    })();
+
+    /* ══════════════════════════════════════════
+       10. MENÚ DE USUARIO (logueado)
+    ══════════════════════════════════════════ */
+    (function () {
+        var selector = document.querySelector('.user-menu-selector');
+        if (!selector) return;
+        var toggle = selector.querySelector('.user-menu-toggle');
+
+        toggle.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var willOpen = !selector.classList.contains('open');
+            document.querySelectorAll('.lang-selector.open, .currency-selector-ctrl.open').forEach(function (s) {
+                s.classList.remove('open');
+            });
+            if (willOpen) selector.classList.add('open');
+        });
+
+        document.addEventListener('click', function () {
+            selector.classList.remove('open');
         });
     })();
 

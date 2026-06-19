@@ -9,7 +9,7 @@ if (isLoggedIn()) {
 }
 
 $MAX_ATTEMPTS = 5;
-$LOCK_MINUTES = 15;
+$LOCK_MINUTES = 5;
 $errors = [];
 $old = ['identifier' => ''];
 

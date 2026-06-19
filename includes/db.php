@@ -5,10 +5,10 @@
    reales del hosting (cPanel / MySQL).
    ============================================= */
 
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'moonly_db');
-define('DB_USER', 'moonly_user');
-define('DB_PASS', 'CAMBIA_ESTA_CLAVE');
+define('DB_HOST', 'mia1.moonly.es');
+define('DB_NAME', 's39_web');
+define('DB_USER', 'u39_bnwjBkaxMa');
+define('DB_PASS', 'ENvO=KKMKJ0^wQljnf2Y=dVg');
 
 function getDb() {
     static $pdo = null;

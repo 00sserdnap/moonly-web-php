@@ -1,9 +1,25 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
+
+    /* Sesiones guardadas dentro del propio webroot. */
+    $sessionPath = dirname(__FILE__) . '/sessions';
+    if (!is_dir($sessionPath)) {
+        @mkdir($sessionPath, 0755, true);
+    }
+    ini_set('session.save_path', $sessionPath);
+
+    /* Detecta automáticamente si la conexión actual es HTTPS.
+       Así, cuando instales el SSL más adelante, la cookie se
+       pondrá "secure" sola, sin que tengas que tocar este archivo. */
+    $isHttps = (
+        (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+        || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+    );
+
     session_set_cookie_params([
         'lifetime' => 0,
         'path' => '/',
-        'secure' => true,      // pon false SOLO si pruebas en local sin HTTPS
+        'secure' => $isHttps,
         'httponly' => true,
         'samesite' => 'Strict',
     ]);
